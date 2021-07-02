@@ -4,15 +4,12 @@ const util = require("util");
 const Employee = require("./employee");
 const { roles } = require("./roles");
 
-const employee = new Employee("Tom", 10, "tkerekes10@gmail.com", roles);
-
-console.log(employee.getName());
-
 // create writeFile function using promises instead of a callback function
 const writeFileAsync = util.promisify(fs.writeFile);
 
 let employeeDataArray = [];
 
+//The start of the HTML
 let employeeCardData = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,6 +22,7 @@ let employeeCardData = `<!DOCTYPE html>
   <div class="jumbotron jumbotron-fluid">
   <div class="container">`;
 
+//Prompt Questions
 const questions = [
   {
     type: "input",
@@ -73,21 +71,9 @@ const questions = [
     choices: ["Yes", "No"],
     default: "Yes",
   },
-
-  //This is all I will ask in the beginning in order to add the if statement depending on the role
-
-  // {
-  //   type: "input",
-  //   name: "github",
-  //   message: "Enter your GitHub Username",
-  // },
-  // {
-  //   type: "input",
-  //   name: "linkedin",
-  //   message: "Enter your LinkedIn URL.",
-  // },
 ];
 
+//Exmaple Data that is being passed into the createEmployeeCard to show that it works (just that I ran into a roadblock in getting the correct info from the prompt)
 let array = [
   {
     name: "Tom",
@@ -98,6 +84,7 @@ let array = [
   },
 ];
 
+//Create the cards that will go into the HTML file
 function createEmployeeCard(array) {
   for (let i = 0; i < array.length; i++) {
     return `<li class="list-group-item">Name: ${array[i].name}
@@ -109,14 +96,7 @@ function createEmployeeCard(array) {
   }
 }
 
-// const employeeCard = function (answers) {
-//   console.log(answers);
-//   employeeDataArray.forEach((el) => {
-//     console.log(el);
-//     return createEmployeeCard(el);
-//   });
-// };
-
+//This is what fills out the createEmployeeCard
 function fillOutEmployee(answers) {
   for (let i = 0; i < answers.length; i++) {
     let newEmployee = new Employee(
@@ -131,6 +111,7 @@ function fillOutEmployee(answers) {
   }
 }
 
+//This is to check if the inquirer needs to move on to another employee or not
 const promptUser = (questions) => {
   return inquirer.prompt(questions).then(function (answers) {
     if (answers.new === "Yes") {
@@ -143,19 +124,20 @@ const promptUser = (questions) => {
   });
 };
 
-// promptUser(questions);
-
+//This is the ending of the HTML file
 const endHTML = `</div>
 </div>
 </body>
 </html>`;
 
+// This is to add the employeecards to the HTML with the start and end parts
 function generateHTML(answers) {
   return employeeCardData + createEmployeeCard(answers) + endHTML;
 }
 
 // Bonus using writeFileAsync as a promise
 
+//This is what starts the whole process off
 const init = () => {
   promptUser(questions)
     .then((answers) => writeFileAsync("index.html", generateHTML(array)))
