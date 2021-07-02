@@ -24,7 +24,7 @@
     
   From the CLI, you will run the command "node index.js" in order to spin the application up. Once it is running, you will be prompted with questions that will need to be answered in order to create the HTML page. Once you are done adding employees, the application will take the data and write in into an HTML page with the information entered.
   
-  [![DEMO](DEMO-Team-Information.mp4)({/DEMO-Team-Information.mp4} "Demo")
+  [![DEMO]({/DEMO-Team-Information.mp4} "Demo")
     
 
   ##  Installation
